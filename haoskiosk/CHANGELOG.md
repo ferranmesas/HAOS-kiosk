@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.2.0 - October 2025
+
+- Added optional first-touch swallow overlay (kiosk_idle.py) to prevent unintended dashboard interaction on wake
+- Added `swallow_first_touch` configuration option (default: true)
+- Added kiosk_idle.py daemon and disabled native DPMS when enabled
+- Added python-xlib & evdev packages to support overlay & future input handling
+- General version bump and minor internal refactors
+
 ## v1.1.1 - September 2025
 
 - Auto-detect drm video card used and set 'kmsdev' accordingly in xorg.conf

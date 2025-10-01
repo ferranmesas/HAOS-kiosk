@@ -39,6 +39,8 @@ RUN apk update && apk add --no-cache \
     onboard \
     py3-pip \
     python3-tkinter \
+    py3-evdev \
+    py3-xlib \
     patch \
     bash \
     && apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.21/community luakit=2.3.6-r0 \
@@ -56,6 +58,7 @@ COPY run.sh /
 RUN chmod a+x /run.sh
 
 COPY toggle_keyboard.py rest_server.py /
+COPY kiosk_idle.py /
 RUN pip install --no-cache-dir  --break-system-packages aiohttp #Required for rest_server.py
 
 # Need to patch 'unique_instance.lua' so that new instance urls overwrite active url rather than add new tab

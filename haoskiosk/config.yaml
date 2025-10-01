@@ -3,7 +3,7 @@ name: "HAOS Kiosk Display"
 description: |
   Start X server and browser on local HAOS server and display dashboards in
   kiosk mode (Jeff Kosowsky)
-version: "1.1.1"
+version: "1.2.3"
 slug: "haoskiosk"
 
 arch:
@@ -80,6 +80,7 @@ options:
   rest_port: 8080
   rest_bearer_token: ""
   debug_mode: false
+  swallow_first_touch: true
 
 schema:
   ha_username: str
@@ -105,6 +106,7 @@ schema:
   rest_bearer_token: password
   allow_user_commands: bool
   debug_mode: bool
+  swallow_first_touch: bool
 
 translations:
   - en

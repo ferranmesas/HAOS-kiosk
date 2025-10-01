@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-VERSION="1.1.1"
+VERSION="1.2.0"
 ################################################################################
 # Add-on: HAOS Kiosk Display (haoskiosk)
 # File: run.sh
@@ -135,6 +135,7 @@ load_config_var REST_BEARER_TOKEN "" 1 #Mask token in log
 load_config_var ALLOW_USER_COMMANDS false
 [ "$ALLOW_USER_COMMANDS" = "true" ] && bashio::log.warning "WARNING: 'allow_user_commands' set to 'true'"
 load_config_var DEBUG_MODE false
+load_config_var SWALLOW_FIRST_TOUCH true
 
 # Validate environment variables set by config.yaml
 if [ -z "$HA_USERNAME" ] || [ -z "$HA_PASSWORD" ]; then
@@ -326,13 +327,22 @@ fi
 bashio::log.info "$WINMGR window manager started successfully..."
 
 #### Configure screen timeout (Note: DPMS needs to be enabled/disabled *after* starting window manager)
-xset +dpms #Turn on DPMS
-xset s "$SCREEN_TIMEOUT"
-xset dpms "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT"
-if [ "$SCREEN_TIMEOUT" -eq 0 ]; then
-    bashio::log.info "Screen timeout disabled..."
+if [ "$SWALLOW_FIRST_TOUCH" = true ] && [ "$SCREEN_TIMEOUT" -gt 0 ]; then
+    bashio::log.info "Swallow-first-touch mode enabled; delegating blank/wake to kiosk_idle.py (timeout=$SCREEN_TIMEOUT)"
+    # Disable native DPMS & screensaver so our daemon has sole control
+    xset -dpms
+    xset s off
+    export SWALLOW_FIRST_TOUCH
+    KIOSK_IDLE_DEBUG=true python3 /kiosk_idle.py &
 else
-    bashio::log.info "Screen timeout after $SCREEN_TIMEOUT seconds..."
+    xset +dpms #Turn on DPMS
+    xset s "$SCREEN_TIMEOUT"
+    xset dpms "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT"
+    if [ "$SCREEN_TIMEOUT" -eq 0 ]; then
+        bashio::log.info "Screen timeout disabled..."
+    else
+        bashio::log.info "Screen timeout after $SCREEN_TIMEOUT seconds..."
+    fi
 fi
 
 #### Activate (+/- rotate) desired physical output number
