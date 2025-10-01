@@ -51,6 +51,7 @@ ENV DISPLAY=:0
 COPY xorg.conf.default /etc/X11/
 COPY userconf.lua /root/.config/luakit/
 COPY translations/*.yaml /translations/
+COPY xinput-sleep.sh /etc/pm/sleep.d/
 
 COPY run.sh /
 RUN chmod a+x /run.sh
