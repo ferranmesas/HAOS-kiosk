@@ -635,7 +635,7 @@ python3 -u /mouse_touch_inputs.py  -d 1 -w "$COMMAND_WHITELIST" &
 ### Swallow the tap that wakes a blanked screen
 if [ "$WAKE_TAP_GUARD" = true ] && [ "$SCREEN_TIMEOUT" -ne 0 ]; then
     bashio::log.info "Starting wake-tap guard..."
-    bash /wake_guard.sh &
+    python3 -u /wake_guard.py &
 fi
 
 #### Start  HAOSKiosk REST server

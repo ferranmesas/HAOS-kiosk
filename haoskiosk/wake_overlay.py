@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# Fullscreen black window that grabs the pointer and exits when the touch/click
-# that woke the screen is released, so that tap never reaches the browser.
+# Black fullscreen window that grabs the pointer and exits when the tap/click that woke the
+# screen is released, so that tap never reaches the browser.
 from Xlib import X, display
 
 d = display.Display()
