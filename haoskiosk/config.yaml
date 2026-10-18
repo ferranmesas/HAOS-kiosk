@@ -74,6 +74,7 @@ options:
   zoom_level: 100
   browser_refresh: 600
   screen_timeout: 0
+  wake_tap_guard: true
   output_number: 1
   dark_mode: true
   ha_theme: ""
@@ -114,6 +115,7 @@ schema:
   zoom_level: int(10,1000)
   browser_refresh: int(0,)
   screen_timeout: int(0,)
+  wake_tap_guard: bool
   output_number: int(1,2)
   dark_mode: bool
   ha_theme: str?
