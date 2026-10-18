@@ -124,6 +124,12 @@ overwrite the dashboard.\
 Time before screen blanks in seconds. Set to `0` to never timeout.
 (Default: 0 seconds - never timeout)
 
+### Wake Tap Guard
+When the screen is blanked, the tap that wakes it would normally also be
+delivered to the dashboard, pressing whatever happens to be under your finger.
+If enabled, the first tap/click after the screen blanks only wakes the screen
+and is not passed on to the browser. (Default: true)
+
 ### Output Number
 
 Choose which of the *connected* video output ports to use. Set to `1` to

@@ -81,7 +81,7 @@ COPY run.sh /
 RUN chmod a+x /run.sh
 
 COPY mouse_touch_inputs.py gesture_commands.json /
-COPY rest_server.py wake_guard.py wake_overlay.py /
+COPY rest_server.py wake_guard.py /
 
 #### Patches
 # Need to patch 'unique_instance.lua' so that new instance urls overwrite active url rather than add new tab

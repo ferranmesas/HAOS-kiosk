@@ -1,10 +1,20 @@
 # Changelog
 
+## v1.4.1 - October 2026
+
+- Simplified wake tap guard: `wake_guard.py` now just grabs the pointer while
+  the screen is blanked (no overlay window or helper process)
+- Guard now always runs when enabled, so it also covers timeouts set later
+  via the REST API `display_on` function
+- REST API `display_off` now activates the screensaver first so the tap that
+  wakes the screen after a remote blank is also swallowed
+
 ## v1.4.0 - October 2026
 
 - Added wake tap guard (`wake_tap_guard` option, default on): when the screen
   blanks, `wake_guard.py` starts `wake_overlay.py`, which grabs the pointer so
   the tap that wakes the screen is not passed to the dashboard underneath
+  (replaced by a simpler implementation in v1.4.1)
 
 ## v1.3.2 - April 2026
 

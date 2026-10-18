@@ -512,9 +512,10 @@ async def handle_display_on(data: Payload) -> dict[str, Any]:
 @register_function("display_off")
 async def handle_display_off(data: Payload) -> dict[str, Any]:  # pylint: disable=unused-argument
     """Force display off immediately."""
-    result = await execute_command(["xset", "dpms", "force", "off"],
-                                   timeout=SHORT_TIMEOUT, log_prefix="display_off", allow_command=True)
-    return {"success": result["success"]}
+    #Activate screensaver first so that wake_guard.py sees the screen blank and swallows the waking tap
+    results = [await execute_command(cmd, timeout=SHORT_TIMEOUT, log_prefix="display_off", allow_command=True)
+               for cmd in (["xset", "s", "activate"], ["xset", "dpms", "force", "off"])]
+    return {"success": results[-1]["success"]}
 
 @register_function("xset", required=["args"], validators={"args": lambda x: isinstance(x, str) and bool(x.strip())})
 async def handle_xset(data: Payload) -> dict[str, Any]:
