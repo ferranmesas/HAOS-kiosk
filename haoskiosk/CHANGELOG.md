@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.0 - October 2026
+
+- Added wake tap guard (`wake_tap_guard` option, default on): when the screen
+  blanks, `wake_guard.py` starts `wake_overlay.py`, which grabs the pointer so
+  the tap that wakes the screen is not passed to the dashboard underneath
+
 ## v1.3.2 - April 2026
 
 - Added explicit BUILD_FROM location to Dockerfile for ha core 2026.04+
