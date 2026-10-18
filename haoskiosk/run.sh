@@ -129,6 +129,7 @@ load_config_var LOGIN_DELAY 1.0
 load_config_var ZOOM_LEVEL 100
 load_config_var BROWSER_REFRESH 600
 load_config_var SCREEN_TIMEOUT 600  # Default to 600 seconds
+load_config_var WAKE_TAP_GUARD true  # Swallow the tap that wakes a blanked screen
 load_config_var OUTPUT_NUMBER 1  # Which *CONNECTED* Physical video output to use (Defaults to 1)
 #NOTE: By only considering *CONNECTED* output, this maximizes the chance of finding an output
 #      without any need to change configs. Set to 1, unless you have multiple video outputs connected.
@@ -630,6 +631,12 @@ pactl list short sinks | awk -v def="$sink" '{prefix = ($2 == def) ? "*" : " "; 
 ### Launch Xinput parsing...
 bashio::log.info "Starting Mouse & Touch input gesture command parsing..."
 python3 -u /mouse_touch_inputs.py  -d 1 -w "$COMMAND_WHITELIST" &
+
+### Swallow the tap that wakes a blanked screen
+if [ "$WAKE_TAP_GUARD" = true ] && [ "$SCREEN_TIMEOUT" -ne 0 ]; then
+    bashio::log.info "Starting wake-tap guard..."
+    python3 -u /wake_guard.py &
+fi
 
 #### Start  HAOSKiosk REST server
 bashio::log.info "Starting HAOSKiosk REST server..."

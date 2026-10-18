@@ -31,6 +31,9 @@ configuration:
   screen_timeout:
     name: "Screen Timeout"
     description: "Time in seconds until screen blanks; 0 for never [Default: 0]"
+  wake_tap_guard:
+    name: "Wake Tap Guard"
+    description: "Swallow the tap that wakes a blanked screen so it doesn't click the dashboard underneath [Default: true]"
   output_number:
     name: "Output Number"
     description: |
